@@ -1,1 +1,3 @@
-print("game mode")
+import funcGameMode.gameFunc
+
+funcGameMode.gameFunc.printer()

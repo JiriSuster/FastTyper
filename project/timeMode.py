@@ -1,1 +1,3 @@
-print("time mode")
+import funcTimeMode.timeFunc
+
+funcTimeMode.timeFunc.printer()
