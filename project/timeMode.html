@@ -2,13 +2,28 @@
   <head>
     <title>FastTyper...</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="timeMode.css">
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
   <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css"/>
   </head>
-  <body>
+  <body id="web">
+    <a id="logo" href="timeMode.html">FastTyper...</a>
+    <div id="menu_box">
+      <a href="#">game mode</a>
+      <a href="#">60s</a>
+      <a href="#">30s</a>
+      <a href="#">15s</a>
+    </div>
+    <div id="text_box">
+        <div id="txt"></div>
+    </div>
+    <div id="msg"></div>
+    <input type="text" id="text_input" placeholder="write...">
+
+
     <py-config>
       packages = []
-      
+
       [[fetch]]
       files = ['funcTimeMode/timeFunc.py', 'funcCommon/commonFunc.py']
     </py-config>
