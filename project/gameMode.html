@@ -2,10 +2,21 @@
   <head>
     <title>FastTyper...</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="gameMode.css">
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
   <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css"/>
   </head>
-  <body>
+  <body id="web">
+    <a id="logo" href="gameMode.html">FastTyper...</a>
+    <div id="menu_box">
+    </div>
+    <div id="text_box">
+        <div id="txt"></div>
+    </div>
+    <div id="msg"></div>
+    <input type="text" id="text_input" placeholder="write...">
+
+
     <py-config>
       packages = []
 
