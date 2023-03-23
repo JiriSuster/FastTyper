@@ -1,6 +1,9 @@
 import json
 import logging as log
 import random
+import time
+
+START_TIME = time.time()
 
 def getWords(ammount, level):
     if level == 1:
@@ -30,5 +33,14 @@ def getWords(ammount, level):
             outputText += randomWord + " "
         return outputText
     
+
+def timerStart():
+    START_TIME = time.time()
+
+
+
+def timerStop():
+    return time.time() - START_TIME
+
 
 
