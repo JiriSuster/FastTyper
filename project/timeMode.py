@@ -12,7 +12,6 @@ DATA = ""
 DEFAULT_TIME = 60
 TIME = 60
 CURSOR_INDEX = 0
-listOfWords = ["from", "add", "call", "another"]
 
 def setTime(seconds):
     global TIME, DEFAULT_TIME
@@ -22,15 +21,9 @@ def setTime(seconds):
 
 def setText():
     global DATA
-    DATA = getRandomText(25)
+    DATA = funcCommon.commonFunc.getWords(25, 1)
     displayText()
 
-def getRandomText(wordsAmount):
-    text = ''
-    for i in range(wordsAmount-1):
-        text += random.choice(listOfWords) + " "
-    text += random.choice(listOfWords)
-    return text
 def checkShortcuts(event):
     if event.keyCode == 27:
         setTime(DEFAULT_TIME)
@@ -45,7 +38,6 @@ def displayText():
 
 def changeText(input_value):
     array_text = DISPLAY_TEXT.querySelectorAll('span')
-
 
     input_text = OLD_INPUT_TEXT + input_value
     user_list_input = [char for char in input_text]
@@ -71,10 +63,17 @@ def inputEvent(event):
         event.target.value = value[:len(DATA.split(" ")[CURSOR_INDEX])]
     changeText(value)
     if " " in str(value):
-        OLD_INPUT_TEXT += value
-        CURSOR_INDEX += 1
-        event.target.value = ""
-
+        if len(value) < len(DATA.split(" ")[CURSOR_INDEX]):
+            value = value.replace(" ", "")
+            value += "*" * (len(DATA.split(" ")[CURSOR_INDEX]) - len(value))
+            changeText(value)
+            CURSOR_INDEX += 1
+            event.target.value = ""
+            OLD_INPUT_TEXT += value + " "
+        else:
+            CURSOR_INDEX += 1
+            event.target.value = ""
+            OLD_INPUT_TEXT += value
 def setup():
     setText()
     setTime(TIME)
