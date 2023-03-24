@@ -6,7 +6,13 @@ import funcTimeMode.timeFunc
 import funcCommon.commonFunc
 DISPLAY_TEXT = document.getElementById("txt")
 DATA = ""
+TIME = 60
 listOfWords = ["from", "add", "call", "another"]
+
+def setTime(seconds):
+    global TIME
+    TIME = seconds
+    document.getElementById("time").innerHTML = TIME
 def getRandomText(wordsAmount):
     text = ''
     for i in range(wordsAmount-1):
@@ -41,11 +47,11 @@ def setup():
     check_proxy = create_proxy(checkShortcuts)
     document.addEventListener("keydown", check_proxy)
 
-
+    #setTime
+    document.getElementById("time").innerHTML = TIME
 
 def main():
     setup()
-
 
 if __name__ == "__main__":
     main()

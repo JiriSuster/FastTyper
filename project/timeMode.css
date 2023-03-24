@@ -61,6 +61,14 @@ body {
   margin: 10 25px;
   color: #fefbd8;
   text-decoration: none;
+  pointer: cursor;
+}
+
+#menu_box button {
+  margin: 10px;
+  background-color: transparent;
+  border: none;
+  color: #fefbd8;
 }
 
 .correct {

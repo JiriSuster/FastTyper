@@ -9,15 +9,15 @@
   <body id="web">
     <a id="logo" href="timeMode.html">FastTyper...</a>
     <div id="menu_box">
-      <a href="#">game mode</a>
-      <a href="#">60s</a>
-      <a href="#">30s</a>
-      <a href="#">15s</a>
+      <a href="gameMode.html">game mode</a>
+      <button id="btn60" py-onClick="setTime(60)">60s</button>
+      <button id="btn30" py-onClick="setTime(30)">30s</button>
+      <button id="btn15" py-onClick="setTime(15)">15s</button>
     </div>
     <div id="text_box">
+      <div id="time"></div>
         <div id="txt"></div>
     </div>
-    <div id="msg"></div>
     <input type="text" id="text_input" placeholder="write...">
 
 
