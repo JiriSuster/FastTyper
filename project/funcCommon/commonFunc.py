@@ -42,5 +42,12 @@ def timerStart():
 def timerStop():
     return time.time() - START_TIME
 
+def rawWpmCounter(allcharAmount, timeInSeconds):
+    return round((allcharAmount / 5) / (timeInSeconds / 60))
 
+def wpmCounter(allcharAmount, errors, timeInSeconds):
+    return rawWpmCounter(allcharAmount-errors, timeInSeconds)
 
+#return correct percent accuracy
+def accuracyCounter(allcharAmount, errors):
+    return round((allcharAmount - errors) / (allcharAmount / 100))
