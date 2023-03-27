@@ -31,15 +31,18 @@ def getWords(ammount, level):
         for i in range(ammount):
             randomWord = random.choice(words)
             outputText += randomWord + " "
-        return outputText
+        return outputText[:-1]
     
 
 def timerStart():
+    global START_TIME
     START_TIME = time.time()
 
 
 
+
 def timerStop():
+    global START_TIME
     return time.time() - START_TIME
 
 def rawWpmCounter(allcharAmount, timeInSeconds):
