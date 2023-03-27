@@ -15,6 +15,7 @@ CURSOR_INDEX = 0
 MISTAKES = 0
 START_TIME = 0
 TOTAL_WORD_COUNT = 0
+LAST_WRONG_COUNT = 0
 
 
 def setText(ammount=2, difficulty=1):
@@ -38,7 +39,7 @@ def checkShortcuts(event):
 
 
 def TextCorrection(input_value):
-    global WRONG,MISTAKES,CURSOR_INDEX,TOTAL_WORD_COUNT
+    global WRONG,MISTAKES,CURSOR_INDEX,TOTAL_WORD_COUNT,LAST_WRONG_COUNT
     wrongCount = 0
     array_text = DISPLAY_TEXT.querySelectorAll('span')
 
@@ -58,13 +59,17 @@ def TextCorrection(input_value):
                 element.classList.add("wrong")
                 element.classList.remove("correct")
                 wrongCount+=1
-                MISTAKES+=1 #fix mistake counting
 
+    if wrongCount > LAST_WRONG_COUNT:
+        MISTAKES+=1
+
+    LAST_WRONG_COUNT = wrongCount
+    print(wrongCount)
+    print("m",MISTAKES)
     if wrongCount > 0:
         WRONG = True
     else:
         WRONG = False
-    wrongCount=0
 
 
 def inputEvent(event):
