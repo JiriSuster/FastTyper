@@ -119,8 +119,6 @@ def anotherTextWords():
 
 def collectChartInfo():
     global GlResultForChart
-    print(GlWrittenText)
-    print(GlData)
     for index, word in enumerate(GlWrittenText.split(" ")):
         if word == GlData.split(" ")[index]:
             GlResultForChart.append([GlData.split(" ")[index], 0])
