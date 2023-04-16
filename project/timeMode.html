@@ -2,7 +2,7 @@
   <head>
     <title>FastTyper...</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="timeMode.css">
+    <link rel="stylesheet" type="text/css" href="time_mode.css">
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
   <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css"/>
   </head>
@@ -10,9 +10,9 @@
     <a id="logo" href="timeMode.html">FastTyper...</a>
     <div id="menu_box">
       <a href="gameMode.html">game mode</a>
-      <button id="btn60" py-onClick="newGame.setupTime(60)">60s</button>
-      <button id="btn30" py-onClick="newGame.setupTime(30)">30s</button>
-      <button id="btn15" py-onClick="newGame.setupTime(15)">15s</button>
+      <button id="btn60" py-onClick="new_game.setup_time(60)">60s</button>
+      <button id="btn30" py-onClick="new_game.setup_time(30)">30s</button>
+      <button id="btn15" py-onClick="new_game.setup_time(15)">15s</button>
     </div>
     <div id="text_box">
       <div id="time"></div>
@@ -24,9 +24,9 @@
       packages = []
 
       [[fetch]]
-      files = ['funcCommon/commonFunc.py', 'funcCommon/words/wordsLVL1.json', 'funcTimeMode/timeFunctions.py']
+      files = ['funcCommon/commonFunc.py', 'funcCommon/words/wordsLVL1.json', 'funcTimeMode/time_functions.py']
     </py-config>
 
-    <py-script src="timeMode.py"></py-script>
+    <py-script src="time_mode.py"></py-script>
   </body>
 </html>
