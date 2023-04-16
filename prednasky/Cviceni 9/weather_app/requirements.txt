@@ -1,0 +1,11 @@
+certifi==2021.10.8
+charset-normalizer==2.0.12
+geographiclib==1.52
+geopy==2.2.0
+idna==3.3
+pywebio==1.6.0
+requests==2.27.1
+tornado==6.1
+ua-parser==0.10.0
+urllib3==1.26.9
+user-agents==2.2.0

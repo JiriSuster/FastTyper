@@ -1,0 +1,85 @@
+SITOVA KOMUNIKACE
+
+web - to jsou informace, ktere se prostrednictvim internetu prenasi
+internet - fyzicka pocitacova sit (draty,struktura)
+
+Topologie
+-centralizovana sit
+-decentralizovana sit
+-distribuovana sit
+
+Client-server
+-server vybavuje pozadavku klienta
+-pro komunikaci potrebujeme protokol (pravidla pro komunikaci)
+
+-prohlizec je klientem pro web
+-web server je klientem databazoveho serveru
+-prohlizec je serverem pro uzivatele
+
+-server poskytuje sluzbu o kterou klient musi zazadat
+
+Adresa uzlu v siti
+-kazdy stroj ma prirazeny unikatni identifikator - IP ADRESU
+-krome logicke IP adresy rozlisujeme adresu aplikace - port (1-65535)
+-IP adresa + port = socket
+-jeden server muze hostovat vice aplikaci (databaze, mail, webserver)
+
+
+-numericke IP adresy jsou nezapamatovatelne pro cloveka
+-sluzba DNS preklada IP na domeny
+
+protokol - https
+user:psswd - nedoporucuje se - napsani autentikacnich udaju rovnou do linku (vetsinou se nepouziva, nebezpecne)
+adresa - kam se chci pripojit
+port - protokol urcuje cislo portu takze nemusime ho psat
+?query - volitelne parametry, ktere se odevzdaji zdroji (?nazevparametru=hodnota)
+
+-pokud chceme odevzdat v query vice tak spojime pomoci &
+
+
+WWW a HTTP
+
+WWW - sluzba poskytujici vzajemne propojene dokumenty
+-prenos dokumentu zabezpecuje protokol HTTP 	-> dokaze prenaset pouze text
+								->bezstavovy - tupe prijima pozadavky a nevidi mezi nimy spojitost
+								-> k pozadavkum pristupuje izolovane (nepamatuje si treba prihlaseni uzivatele)
+								-> resi se to ruznymi zpusoby
+
+
+								
+
+HTTP transakce
+- kolik HTTP volani potrebujeme na nacitani 1 webove stranky = mnoho (stranka od stranky se lisi)
+- posilaji se: data, styli, obrazky, code ...
+
+
+
+metoda - ramec, ktery rika jak byly data odeslana
+metody se daji pouzit i na jine veci (jde jen o doporuceni), ale potom dochazi k chybam zpracovani pozadavku
+
+
+
+chyby cislo 400 jsou chyby uzivatele
+chyby cislo 500 jsou chyby na strane serveru
+
+REST API
+-soubor pravidel, ktery by se mel dodrzovat pri komunikaci
+-vyuziva prakticky jen HTTP
+-kazdy zdroj ma svuj endpoint
+
+
+Framework FLASK
+-jednoduchy,pomaly,na produkci nepouzitelny
+
+ 
+
+
+
+
+
+
+
+
+
+
+
