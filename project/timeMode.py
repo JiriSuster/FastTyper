@@ -1,26 +1,27 @@
-import funcTimeMode.timeFunc as timeFunc
+import funcTimeMode.timeFunctions as tf
 from js import document
 from pyodide import create_proxy
 
-def inputEvent(event):
-    timeFunc.startGame(event)
+class Start:
+    def __init__(self):
+        self.timeFunc = tf.TimeFunctions()
+    def inputEvent(self, event):
+        self.timeFunc.startGame(event)
 
-def setupTime(seconds):
-    timeFunc.setTime(seconds)
-    timeFunc.resetGame()
+    def setupTime(self, seconds):
+        self.timeFunc.setTime(seconds)
+        self.timeFunc.resetGame()
 
-def setupGame():
-    timeFunc.setText()
-    timeFunc.setTime(60)
-    click_proxy = create_proxy(inputEvent)
-    click = document.getElementById("text_input")
-    click.addEventListener("input", click_proxy)
+    def setupGame(self):
+        self.timeFunc.setText()
+        self.timeFunc.setTime(60)
+        click_proxy = create_proxy(self.inputEvent)
+        click = document.getElementById("text_input")
+        click.addEventListener("input", click_proxy)
 
-    check_proxy = create_proxy(timeFunc.checkShortcuts)
-    document.addEventListener("keydown", check_proxy)
+        check_proxy = create_proxy(self.timeFunc.checkShortcuts)
+        document.addEventListener("keydown", check_proxy)
 
-def main():
-    setupGame()
 
-if __name__ == "__main__":
-    main()
+newGame = Start()
+newGame.setupGame()
