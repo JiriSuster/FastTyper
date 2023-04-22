@@ -1,6 +1,6 @@
 from typing import List, Union, Any
 
-import funcCommon.commonFunc
+import func_common.common_func
 from js import clearInterval, document, setInterval
 from pyodide import create_proxy
 
@@ -43,7 +43,7 @@ class TimeFunctions:
             self.__first_time = False
 
     def set_text(self) -> None:
-        self.__data = funcCommon.commonFunc.getWords(TimeFunctions.WORDS_AMOUNT, 1)
+        self.__data = func_common.common_func.get_words(TimeFunctions.WORDS_AMOUNT, 1)
         self.display_text_lines()
 
     def display_text_lines(self) -> None:

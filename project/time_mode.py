@@ -3,12 +3,12 @@ from typing import Any
 from js import document
 from pyodide import create_proxy
 
-import funcTimeMode.time_functions as tF
+import func_time_mode.time_functions as tf
 
 
 class Start:
     def __init__(self) -> None:
-        self.time_func = tF.TimeFunctions()
+        self.time_func = tf.TimeFunctions()
 
     def input_event(self, event: Any) -> None:
         self.time_func.start_game(event)

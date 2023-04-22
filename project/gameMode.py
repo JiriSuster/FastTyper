@@ -3,7 +3,7 @@ from pyodide import create_proxy
 import random
 import time
 import funcGameMode.gameFunc as game
-import funcCommon.commonFunc as common
+import func_common.common_func as common
 
 WRONG = False
 DATA = ""
@@ -22,7 +22,7 @@ def setText(ammount=2, difficulty=1):
 
     global DATA,TOTAL_WORD_COUNT
     TOTAL_WORD_COUNT = ammount
-    DATA = common.getWords(ammount, difficulty)
+    DATA = common.get_words(ammount, difficulty)
     displayText()
 
 def displayText():
@@ -75,7 +75,7 @@ def TextCorrection(input_value):
 def inputEvent(event):
     global WRITTEN_TEXT, CURSOR_INDEX, FIRST_TIME, INTERVAL, WRONG,MISTAKES
     if FIRST_TIME:
-        common.timerStart()
+        common.timer_start()
         FIRST_TIME = False
     value = event.target.value
     if len(value) > len(DATA.split(" ")[CURSOR_INDEX]):
@@ -98,7 +98,7 @@ def inputEvent(event):
 def anotherTextWords():
     global CURSOR_INDEX, WRITTEN_TEXT, FIRST_TIME, MISTAKES
     if CURSOR_INDEX == TOTAL_WORD_COUNT:
-        print("Zabralo ti to:", common.timerStop(), "sekund. Udělal jsi", MISTAKES, "chyb.")
+        print("Zabralo ti to:", common.timer_stop(), "sekund. Udělal jsi", MISTAKES, "chyb.")
         FIRST_TIME = True
         MISTAKES = 0
         CURSOR_INDEX = 0
