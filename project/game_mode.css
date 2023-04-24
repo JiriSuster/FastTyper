@@ -31,7 +31,7 @@ body {
     width: 800px;
     height: 200px;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -73,4 +73,30 @@ body {
 
 .warn{
     background-color: #ffa70d;
+}
+
+#road{
+    margin:auto;
+    margin-top: 80px;
+    background-image: url("images/road/road.jpg");
+    background-size: contain;
+    width: 1000px;
+    height: 250px;
+}
+
+#player{
+    position: relative;
+    top: 62%;
+}
+
+#player_car{
+    background-image: url("images/car/car_blue.png");
+    background-size: contain;
+    width: 150px;
+    height: 47px;
+}
+
+#player_name{
+    left:55px;
+    position: relative;
 }

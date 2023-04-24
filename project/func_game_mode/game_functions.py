@@ -16,11 +16,20 @@ class GameFunctions:
         self.start_time = 0
         self.total_word_count = 0
         self.last_wrong_count = 0
+        self.player = document.getElementById("player")
 
+
+    def move_car(self, car):
+        position = ((1+ self.cursor_index)/self.total_word_count) * 850
+        car.style.left = str(position) +"px"
+
+    def reset_car(self, car):
+        car.style.left =  str((1/self.total_word_count) * 850) + "px"
     def set_text(self, ammount=25, difficulty=1):
         self.total_word_count = ammount
         self.data = common.get_words(ammount, difficulty)
         self.display_text()
+        self.reset_car(self.player)
 
     def display_text(self):
         self.displayed_text.innerHTML = ""
@@ -62,19 +71,18 @@ class GameFunctions:
                         element.classList.remove("warn")
                         wrong_count += 1
 
-
         if wrong_count > self.last_wrong_count:
-            self.mistakes+=1
+            self.mistakes += 1
 
         self.last_wrong_count = wrong_count
-        print(wrong_count)
-        print("m", self.mistakes)
         if wrong_count > 0:
             self.wrong = True
         else:
             self.wrong = False
 
     def input_event(self, event):
+        self.move_car(self.player)
+
         if self.first_time:
             common.timer_start()
             self.first_time = False
