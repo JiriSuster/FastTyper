@@ -20,12 +20,12 @@ class GameFunctions:
 
 
     def move_car(self, car):
-        position = ((1+ self.cursor_index)/self.total_word_count) * 850
+        position = ((1+ self.cursor_index)/(self.total_word_count)) * 850
         car.style.left = str(position) +"px"
 
     def reset_car(self, car):
-        car.style.left =  str((1/self.total_word_count) * 850) + "px"
-    def set_text(self, ammount=25, difficulty=1):
+        car.style.left ="0px"
+    def set_text(self, ammount=15, difficulty=1):
         self.total_word_count = ammount
         self.data = common.get_words(ammount, difficulty)
         self.display_text()
