@@ -86,7 +86,7 @@ body {
 
 #player{
     position: relative;
-    top: 62%;
+    top: 30%;
     transition: left 1s;
 }
 
@@ -101,3 +101,25 @@ body {
     left:55px;
     position: relative;
 }
+
+
+
+
+#bot{
+    position: relative;
+    top: 15%;
+    transition: left 1s;
+}
+
+#bot_car{
+    background-image: url("images/car/car_green.png");
+    background-size: contain;
+    width: 150px;
+    height: 47px;
+}
+
+#bot_name{
+    left:55px;
+    position: relative;
+}
+
