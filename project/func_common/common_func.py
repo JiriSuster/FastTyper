@@ -57,3 +57,4 @@ def wpm_counter(all_char_amount, errors, time_in_seconds):
 # return correct percent accuracy
 def accuracy_counter(all_char_amount, errors):
     return round((all_char_amount - errors) / (all_char_amount / 100))
+

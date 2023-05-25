@@ -1,4 +1,5 @@
 from js import document
+import js
 from pyodide import create_proxy
 import random
 import time
@@ -18,15 +19,37 @@ class GameFunctions:
         self.last_wrong_count = 0
         self.player = document.getElementById("player")
         self.bot = document.getElementById("bot")
+        self.player_won = False
 
 
     def move_player(self, car):
         position = ((1+ self.cursor_index)/(self.total_word_count)) * 850
         car.style.left = str(position) +"px"
 
+    def move_bot(self, diff=1):
+        position = int(self.bot.style.left.replace("px", ""))
+        if diff == 1:
+            speed = 10
+        elif diff == 2:
+            speed = 20
+        else:
+            speed = 30
+
+        def move():
+            if(not self.player_won):
+                nonlocal position # definovano mimo "move"
+                position += 1
+                self.bot.style.left = str(position) + "px"
+                if position < 850 and not self.player_won:
+                    js.setTimeout(create_proxy(move), speed)
+                else:
+                    if(not self.player_won):
+                        self.end_game(self.bot)
+        move()
+
     def reset_car(self, car):
         car.style.left ="0px"
-    def set_text(self, ammount=15, difficulty=1):
+    def set_text(self, ammount=3, difficulty=1):
         self.total_word_count = ammount
         self.data = common.get_words(ammount, difficulty)
         self.display_text()
@@ -85,14 +108,19 @@ class GameFunctions:
     def input_event(self, event):
         self.move_player(self.player)
 
+
         if self.first_time:
             common.timer_start()
+            self.player_won = False
             self.first_time = False
+            self.move_bot(1)
+
         value = event.target.value
         if len(value) > len(self.data.split(" ")[self.cursor_index]):
             event.target.value = value[:len(self.data.split(" ")[self.cursor_index])]
         self.text_correction(value)
         if " " in str(value) and not self.wrong:
+            #konec slova
             if len(value.replace(" ", "")) < len(self.data.split(" ")[self.cursor_index]):
                 value = value.replace(" ", "")
                 value += "*" * (len(self.data.split(" ")[self.cursor_index]) - len(value))
@@ -109,16 +137,21 @@ class GameFunctions:
 
     def another_text_words(self, TOTAL_WORD_COUNT):
         if self.cursor_index == TOTAL_WORD_COUNT:
-            print("Zabralo ti to:", common.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
-            self.first_time = True
-            self.mistakes = 0
-            self.cursor_index = 0
-            self.written_text = ""
-            self.set_text()
+            self.end_game(self.player)
 
 
     def reset_game(self):
+        self.mistakes = 0
         self.first_time = True
         self.cursor_index = 0
         self.written_text = ""
         self.set_text()
+
+    def end_game(self, car):
+        print("Zabralo ti to:", common.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
+        if car == self.player:
+            self.player_won = True
+            print("YOU WON!!!")
+        elif car == self.bot:
+            print("YOU LOST!!!")
+        self.reset_game()

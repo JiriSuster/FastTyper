@@ -108,7 +108,6 @@ body {
 #bot{
     position: relative;
     top: 15%;
-    transition: left 1s;
 }
 
 #bot_car{
