@@ -1,6 +1,7 @@
 from js import document
 from pyodide import create_proxy
 import func_game_mode.game_functions as gf
+import func_common.common_func as cf
 
 
 def main():
@@ -14,7 +15,10 @@ def setup(game):
     click = document.getElementById("text_input")
     click.addEventListener("input", click_proxy)
     check_proxy = create_proxy(game.check_shortcuts)
+    hide_proxy = create_proxy(cf.hide_overlay)
     document.addEventListener("keydown", check_proxy)
+    button = document.getElementById("ok")
+    button.addEventListener("click", hide_proxy)
 
 if __name__ == "__main__":
     main()

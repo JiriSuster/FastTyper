@@ -4,7 +4,7 @@ from js import document
 from pyodide import create_proxy
 
 import func_time_mode.time_functions as tf
-
+import func_common.common_func as cf
 
 class Start:
     def __init__(self) -> None:
@@ -23,6 +23,9 @@ class Start:
         click_proxy = create_proxy(self.input_event)
         click = document.getElementById("text_input")
         click.addEventListener("input", click_proxy)
+        hide_proxy = create_proxy(cf.hide_overlay)
+        button = document.getElementById("ok")
+        button.addEventListener("click", hide_proxy)
 
         check_proxy = create_proxy(self.time_func.check_shortcuts)
         document.addEventListener("keydown", check_proxy)

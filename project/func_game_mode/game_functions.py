@@ -26,14 +26,14 @@ class GameFunctions:
         position = ((1+ self.cursor_index)/(self.total_word_count)) * 850
         car.style.left = str(position) +"px"
 
-    def move_bot(self, diff=1):
+    def move_bot(self, difficulty=1):
         position = int(self.bot.style.left.replace("px", ""))
-        if diff == 1:
-            speed = 10
-        elif diff == 2:
+        if difficulty == 1:
             speed = 20
-        else:
-            speed = 30
+        elif difficulty == 2:
+            speed = 15
+        elif difficulty == 3:
+            speed = 5
 
         def move():
             if(not self.player_won):
@@ -65,7 +65,10 @@ class GameFunctions:
 
     def check_shortcuts(self, event):
         if event.keyCode == 27:
+            self.player_won = True
             self.reset_game()
+            document.getElementById("text_input").value = ""
+            common.hide_overlay(True)
 
     def text_correction(self, input_value):
         wrong_count = 0
@@ -113,7 +116,7 @@ class GameFunctions:
             common.timer_start()
             self.player_won = False
             self.first_time = False
-            self.move_bot(1)
+            self.move_bot(3)
 
         value = event.target.value
         if len(value) > len(self.data.split(" ")[self.cursor_index]):
@@ -154,4 +157,6 @@ class GameFunctions:
             print("YOU WON!!!")
         elif car == self.bot:
             print("YOU LOST!!!")
+        #common.show_chart([['Polozka', 3], ['test', 2], ['Polozka', 3], ['z', 8], ['test', 8]], "raw_wpm")
+        common.show_chart([['Polozka', 3,1], ['test', 2, 1], ['Polozka',3, 1], ['z',8, 0], ['test',8, 3]], "wpm")
         self.reset_game()

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="game_mode.css">
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
   <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css"/>
   </head>
   <body id="web">
@@ -31,9 +32,16 @@
     <div id="msg"></div>
     <input type="text" id="text_input" placeholder="write...">
 
+    <div id = "overlay" style="visibility: hidden;">                   <!-- style="visibility: hidden;"-->
+      Stats: <br />
+      <div id="chart"></div><br />
+      WPM: <p id = "wpm"></p>
+      <input type="button" value="OK" id = "ok">
+    </div>
+
 
     <py-config>
-      packages = []
+      packages = ["plotly"]
       terminal = false
 
       [[fetch]]
@@ -42,4 +50,8 @@
 
     <py-script src="game_mode.py"></py-script>
   </body>
+<script>function plot(graph, chart) {
+            var figure = JSON.parse(graph)
+            Plotly.newPlot(chart, figure);
+        }</script>
 </html>

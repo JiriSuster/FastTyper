@@ -55,6 +55,7 @@ class TimeFunctions:
 
     def check_shortcuts(self, event: Any) -> None:
         if event.keyCode == 27:
+            func_common.common_func.hide_overlay(True)
             self.reset_game()
 
     def text_correction(self, input_value: str) -> None:
@@ -146,3 +147,4 @@ class TimeFunctions:
         print("end of game")
         print("here will be link on chart with final Data")
         print(self.__result_for_chart)
+        func_common.common_func.show_chart([['Polozka', 3], ['test', 2], ['Polozka', 3], ['z', 1], ['test', 8]], "raw_wpm")
