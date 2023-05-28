@@ -122,9 +122,9 @@ class TimeFunctions:
         right_word = self.__data.split()[self.__cursor_index]
         time = func_common.common_func.timer_stop()
         self.__final_data_for_chart.append([right_word,
-                                      self._calculate_mistakes_in_word(right_word, word.replace(" ", "")),
-                                      time]
-                                     )
+                                            time,
+                                            self._calculate_mistakes_in_word(right_word, word.replace(" ", ""))]
+                                           )
 
     def _another_text_words(self) -> None:
         if self.__cursor_index == TimeFunctions.WORDS_AMOUNT:
@@ -150,5 +150,4 @@ class TimeFunctions:
         self.__final_data_for_chart = []
 
     def _game_end(self) -> None:
-        print(self.__final_data_for_chart)
-        #func_common.common_func.show_chart(self.__final_data_for_chart, "wpm")
+        func_common.common_func.show_chart(self.__final_data_for_chart, "wpm")
