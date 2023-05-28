@@ -19,34 +19,35 @@ class TimeFunctions:
         self.__time = 60
         self.__first_time = True
         self.__cursor_index = 0
-        self.__result_for_chart: List[List[Union[str, int]]] = []
+        self.__check_value = -1
+        self.__final_data_for_chart: List[List[str, int, float]] = []
 
     def set_time(self, seconds: int) -> None:
         self.__default_time = seconds
         self.__time = seconds
         self.__display_time.innerHTML = self.__time
 
-    def timer(self) -> None:
+    def _timer(self) -> None:
         self.__time -= 1
         self.__display_time.innerHTML = self.__time
-        self.end_of_time()
+        self._end_of_time()
 
-    def end_of_time(self) -> None:
+    def _end_of_time(self) -> None:
         if self.__time == 0:
             clearInterval(self.__interval)
-            self.game_end()
+            self._game_end()
 
-    def run_interval(self) -> None:
+    def _run_interval(self) -> None:
         if self.__first_time:
-            proxy = create_proxy(self.timer)
+            proxy = create_proxy(self._timer)
             self.__interval = setInterval(proxy, 1000)
             self.__first_time = False
 
     def set_text(self) -> None:
         self.__data = func_common.common_func.get_words(TimeFunctions.WORDS_AMOUNT, 1)
-        self.display_text_lines()
+        self._display_text_lines()
 
-    def display_text_lines(self) -> None:
+    def _display_text_lines(self) -> None:
         self.display_text.innerHTML = ""
         for character in self.__data:
             char_with_span = document.createElement("span")
@@ -58,7 +59,7 @@ class TimeFunctions:
             func_common.common_func.hide_overlay(True)
             self.reset_game()
 
-    def text_correction(self, input_value: str) -> None:
+    def _text_correction(self, input_value: str) -> None:
         text_list = self.display_text.querySelectorAll("span")
 
         input_text = self.__written_text + input_value
@@ -77,30 +78,39 @@ class TimeFunctions:
                     element.classList.add("wrong")
                     element.classList.remove("correct")
 
+    def _start_timing_per_word(self) -> None:
+        tt = (self.__cursor_index != self.__check_value)
+        if tt:
+            self.__check_value = self.__cursor_index
+            tt = False
+            func_common.common_func.timer_start()
+
     def start_game(self, event: Any) -> None:
-        self.run_interval()
+        self._run_interval()
         value = event.target.value
+        self._start_timing_per_word()
 
         if len(value) > len(self.__data.split(" ")[self.__cursor_index]):
             event.target.value = value[:len(self.__data.split(" ")[self.__cursor_index])]
-        self.text_correction(value)
+        self._text_correction(value)
         if " " in str(value):
             if len(value.replace(" ", "")) < len(self.__data.split(" ")[self.__cursor_index]):
-                self.replace_spaces_as_mistake(value)
+                self._replace_spaces_as_mistake(value)
                 event.target.value = ""
             else:
-                self.add_written_word(value)
+                self._add_written_word(value)
                 event.target.value = ""
-            self.another_text_words()
+            self._another_text_words()
 
-    def replace_spaces_as_mistake(self, value: str) -> None:
+    def _replace_spaces_as_mistake(self, value: str) -> None:
         value = value.replace(" ", "")
         value += TimeFunctions.MISTAKES * \
                  (len(self.__data.split(" ")[self.__cursor_index]) - len(value))
-        self.text_correction(value)
-        self.add_written_word(value+" ")
+        self._text_correction(value)
+        self._add_written_word(value + " ")
 
-    def add_written_word(self, word: str) -> None:
+    def _add_written_word(self, word: str) -> None:
+        self._collect_data_for_chart(word)
         if self.__cursor_index == TimeFunctions.WORDS_AMOUNT - 1:
             self.__cursor_index += 1
             self.__written_text += word.replace(" ", "")
@@ -108,24 +118,21 @@ class TimeFunctions:
             self.__cursor_index += 1
             self.__written_text += word
 
-    def another_text_words(self) -> None:
+    def _collect_data_for_chart(self, word) -> None:
+        right_word = self.__data.split()[self.__cursor_index]
+        time = func_common.common_func.timer_stop()
+        self.__final_data_for_chart.append([right_word,
+                                      self._calculate_mistakes_in_word(right_word, word.replace(" ", "")),
+                                      time]
+                                     )
+
+    def _another_text_words(self) -> None:
         if self.__cursor_index == TimeFunctions.WORDS_AMOUNT:
-            self.collect_chart_info()
             self.__cursor_index = 0
             self.__written_text = ""
             self.set_text()
 
-    def collect_chart_info(self) -> None:
-        for index, word in enumerate(self.__written_text.split(" ")):
-            if word == self.__data.split(" ")[index]:
-                self.__result_for_chart.append([self.__data.split(" ")[index], 0])
-            else:
-                wrong_amount = \
-                    self.calculate_mistakes_in_word(right_word=self.__data.split(" ")[index],
-                                                    wrong_word=word)
-                self.__result_for_chart.append([self.__data.split(" ")[index], wrong_amount])
-
-    def calculate_mistakes_in_word(self, right_word: str, wrong_word: str) -> int:
+    def _calculate_mistakes_in_word(self, right_word: str, wrong_word: str) -> int:
         mistakes = 0
         for i, character in enumerate(right_word):
             if character != wrong_word[i]:
@@ -140,11 +147,8 @@ class TimeFunctions:
         document.getElementById("text_input").value = ""
         self.set_text()
         self.set_time(self.__default_time)
+        self.__final_data_for_chart = []
 
-    # docasne
-
-    def game_end(self) -> None:
-        print("end of game")
-        print("here will be link on chart with final Data")
-        print(self.__result_for_chart)
-        func_common.common_func.show_chart([['Polozka', 3], ['test', 2], ['Polozka', 3], ['z', 1], ['test', 8]], "raw_wpm")
+    def _game_end(self) -> None:
+        print(self.__final_data_for_chart)
+        #func_common.common_func.show_chart(self.__final_data_for_chart, "wpm")

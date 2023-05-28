@@ -41,12 +41,9 @@ def timer_start():
     global START_TIME
     START_TIME = time.time()
 
-
-
-
 def timer_stop():
     global START_TIME
-    return time.time() - START_TIME
+    return round((time.time() - START_TIME), 2)
 
 
 def raw_wpm_counter(all_char_amount, time_in_seconds):
