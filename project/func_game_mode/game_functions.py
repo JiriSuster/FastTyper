@@ -20,16 +20,17 @@ class GameFunctions:
         self.player = document.getElementById("player")
         self.bot = document.getElementById("bot")
         self.player_won = False
+        self.data_for_chart = list()
 
 
     def move_player(self, car):
-        position = ((1+ self.cursor_index)/(self.total_word_count)) * 850
+        position = ((1+self.cursor_index)/(self.total_word_count -1)) * 850
         car.style.left = str(position) +"px"
 
     def move_bot(self, difficulty=1):
         position = int(self.bot.style.left.replace("px", ""))
         if difficulty == 1:
-            speed = 20
+            speed = 50
         elif difficulty == 2:
             speed = 15
         elif difficulty == 3:
@@ -49,7 +50,7 @@ class GameFunctions:
 
     def reset_car(self, car):
         car.style.left ="0px"
-    def set_text(self, ammount=3, difficulty=1):
+    def set_text(self, ammount=25, difficulty=1):
         self.total_word_count = ammount
         self.data = common.get_words(ammount, difficulty)
         self.display_text()
@@ -109,21 +110,24 @@ class GameFunctions:
             self.wrong = False
 
     def input_event(self, event):
-        self.move_player(self.player)
 
 
         if self.first_time:
             common.timer_start()
             self.player_won = False
             self.first_time = False
-            self.move_bot(3)
+            self.move_bot()
 
         value = event.target.value
         if len(value) > len(self.data.split(" ")[self.cursor_index]):
             event.target.value = value[:len(self.data.split(" ")[self.cursor_index])]
+
         self.text_correction(value)
         if " " in str(value) and not self.wrong:
             #konec slova
+            self.data_for_chart.append([str(value),common.timer_stop()])
+            common.timer_start()
+            self.move_player(self.player)
             if len(value.replace(" ", "")) < len(self.data.split(" ")[self.cursor_index]):
                 value = value.replace(" ", "")
                 value += "*" * (len(self.data.split(" ")[self.cursor_index]) - len(value))
@@ -157,6 +161,5 @@ class GameFunctions:
             print("YOU WON!!!")
         elif car == self.bot:
             print("YOU LOST!!!")
-        #common.show_chart([['Polozka', 3], ['test', 2], ['Polozka', 3], ['z', 8], ['test', 8]], "raw_wpm")
-        common.show_chart([['Polozka', 3,1], ['test', 2, 1], ['Polozka',3, 1], ['z',8, 0], ['test',8, 3]], "wpm")
+        common.show_chart(self.data_for_chart, "raw_wpm")
         self.reset_game()
