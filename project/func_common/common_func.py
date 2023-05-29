@@ -97,7 +97,7 @@ def show_chart(data_list, method):
     wpm = 0
     for item in y:
         wpm += int(item)
-    document.getElementById("wpm").innerHTML = round(wpm/len(y), 2)
+    document.getElementById("wpm").innerHTML = wpm/len(y)
 
 
 
