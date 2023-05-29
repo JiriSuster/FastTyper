@@ -133,3 +133,21 @@ body {
     width: 600px;
     height: 700px;
 }
+
+.stats_header {
+    text-align: center;
+}
+
+.wpm_text {
+    font-size: bold;
+    margin: 10 20px;
+}
+
+#ok {
+  margin: 10px;
+  width: 100px;
+  text-align: center;
+  border-radius: 20px;
+  color: grey;
+  height: 35px;
+}
