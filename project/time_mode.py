@@ -9,6 +9,7 @@ import func_common.common_func as cf
 class Start:
     def __init__(self) -> None:
         self.time_func = tf.TimeFunctions()
+        self.cmn_func = cf.Cmn()
 
     def input_event(self, event: Any) -> None:
         self.time_func.start_game(event)
@@ -23,7 +24,7 @@ class Start:
         click_proxy = create_proxy(self.input_event)
         click = document.getElementById("text_input")
         click.addEventListener("input", click_proxy)
-        hide_proxy = create_proxy(cf.hide_overlay)
+        hide_proxy = create_proxy(self.cmn_func.hide_overlay)
         button = document.getElementById("ok")
         button.addEventListener("click", hide_proxy)
 

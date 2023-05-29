@@ -7,6 +7,7 @@ import func_common.common_func as common
 
 class GameFunctions:
     def __init__(self):
+        self.cmn_func = common.Cmn()
         self.wrong = False
         self.data = ""
         self.displayed_text = document.getElementById("txt")
@@ -52,7 +53,7 @@ class GameFunctions:
         car.style.left ="0px"
     def set_text(self, ammount=25, difficulty=1):
         self.total_word_count = ammount
-        self.data = common.get_words(ammount, difficulty)
+        self.data = self.cmn_func.get_words(ammount, difficulty)
         self.display_text()
         self.reset_car(self.player)
         self.reset_car(self.bot)
@@ -69,7 +70,7 @@ class GameFunctions:
             self.player_won = True
             self.reset_game()
             document.getElementById("text_input").value = ""
-            common.hide_overlay(True)
+            self.cmn_func.hide_overlay(True)
 
     def text_correction(self, input_value):
         wrong_count = 0
@@ -113,7 +114,7 @@ class GameFunctions:
 
 
         if self.first_time:
-            common.timer_start()
+            self.cmn_func.timer_start()
             self.player_won = False
             self.first_time = False
             self.move_bot()
@@ -125,8 +126,8 @@ class GameFunctions:
         self.text_correction(value)
         if " " in str(value) and not self.wrong:
             #konec slova
-            self.data_for_chart.append([str(value),common.timer_stop()])
-            common.timer_start()
+            self.data_for_chart.append([str(value), self.cmn_func.timer_stop()])
+            self.cmn_func.timer_start()
             self.move_player(self.player)
             if len(value.replace(" ", "")) < len(self.data.split(" ")[self.cursor_index]):
                 value = value.replace(" ", "")
@@ -155,11 +156,11 @@ class GameFunctions:
         self.set_text()
 
     def end_game(self, car):
-        print("Zabralo ti to:", common.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
+        print("Zabralo ti to:", self.cmn_func.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
         if car == self.player:
             self.player_won = True
             print("YOU WON!!!")
         elif car == self.bot:
             print("YOU LOST!!!")
-        common.show_chart(self.data_for_chart, "raw_wpm")
+        self.cmn_func.show_chart(self.data_for_chart, "raw_wpm")
         self.reset_game()

@@ -10,6 +10,7 @@ class TimeFunctions:
     MISTAKES = "*"
 
     def __init__(self) -> None:
+        self.cmn_func = func_common.common_func.Cmn()
         self.display_text = document.getElementById("txt")
         self.__display_time = document.getElementById("time")
         self.__interval = None
@@ -44,7 +45,7 @@ class TimeFunctions:
             self.__first_time = False
 
     def set_text(self) -> None:
-        self.__data = func_common.common_func.get_words(TimeFunctions.WORDS_AMOUNT, 1)
+        self.__data = self.cmn_func.get_words(TimeFunctions.WORDS_AMOUNT, 1)
         self._display_text_lines()
 
     def _display_text_lines(self) -> None:
@@ -56,7 +57,7 @@ class TimeFunctions:
 
     def check_shortcuts(self, event: Any) -> None:
         if event.keyCode == 27:
-            func_common.common_func.hide_overlay(True)
+            self.cmn_func.hide_overlay(True)
             self.reset_game()
 
     def _text_correction(self, input_value: str) -> None:
@@ -83,7 +84,7 @@ class TimeFunctions:
         if tt:
             self.__check_value = self.__cursor_index
             tt = False
-            func_common.common_func.timer_start()
+            self.cmn_func.timer_start()
 
     def start_game(self, event: Any) -> None:
         self._run_interval()
@@ -120,7 +121,7 @@ class TimeFunctions:
 
     def _collect_data_for_chart(self, word) -> None:
         right_word = self.__data.split()[self.__cursor_index]
-        time = func_common.common_func.timer_stop()
+        time = self.cmn_func.timer_stop()
         self.__final_data_for_chart.append([right_word,
                                             time,
                                             self._calculate_mistakes_in_word(right_word, word.replace(" ", ""))]
@@ -150,4 +151,4 @@ class TimeFunctions:
         self.__final_data_for_chart = []
 
     def _game_end(self) -> None:
-        func_common.common_func.show_chart(self.__final_data_for_chart, "wpm")
+        self.cmn_func.show_chart(self.__final_data_for_chart, "wpm")
