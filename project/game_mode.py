@@ -18,8 +18,16 @@ def setup(game):
     check_proxy = create_proxy(game.check_shortcuts)
     hide_proxy = create_proxy(cmn_func.hide_overlay)
     document.addEventListener("keydown", check_proxy)
+
     button = document.getElementById("ok")
     button.addEventListener("click", hide_proxy)
+
+    change_difficulty_proxy = create_proxy(game.change_difficulty)
+    radio_buttons = document.querySelectorAll('input[type="radio"]')
+    for radio_button in radio_buttons:
+        radio_button.addEventListener('change', change_difficulty_proxy)
+
+
 
 
 if __name__ == "__main__":

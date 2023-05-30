@@ -22,22 +22,23 @@ class GameFunctions:
         self.bot = document.getElementById("bot")
         self.player_won = False
         self.data_for_chart = list()
+        self.difficulty = 1
 
 
-    def move_player(self, car):
+    def move_player(self, car) -> None:
         position = ((1+self.cursor_index)/(self.total_word_count -1)) * 850
         car.style.left = str(position) +"px"
 
-    def move_bot(self, difficulty=1):
+    def move_bot(self, difficulty=1) -> None:
         position = int(self.bot.style.left.replace("px", ""))
         if difficulty == 1:
-            speed = 50
+            speed = 55
         elif difficulty == 2:
-            speed = 15
+            speed = 45
         elif difficulty == 3:
-            speed = 5
+            speed = 35
 
-        def move():
+        def move() -> None:
             if(not self.player_won):
                 nonlocal position # definovano mimo "move"
                 position += 1
@@ -49,30 +50,29 @@ class GameFunctions:
                         self.end_game(self.bot)
         move()
 
-    def reset_car(self, car):
+    def reset_car(self, car) -> None:
         car.style.left ="0px"
-    def set_text(self, ammount=25, difficulty=1):
+    def set_text(self, ammount=25, difficulty=1) -> None:
         self.total_word_count = ammount
         self.data = self.cmn_func.get_words(ammount, difficulty)
         self.display_text()
         self.reset_car(self.player)
         self.reset_car(self.bot)
 
-    def display_text(self):
+    def display_text(self) -> None:
         self.displayed_text.innerHTML = ""
         for character in self.data:
             character_span = document.createElement("span")
             character_span.innerHTML = character
             self.displayed_text.appendChild(character_span)
 
-    def check_shortcuts(self, event):
+    def check_shortcuts(self, event) -> None:
         if event.keyCode == 27:
-            self.player_won = True
             self.reset_game()
             document.getElementById("text_input").value = ""
             self.cmn_func.hide_overlay(True)
 
-    def text_correction(self, input_value):
+    def text_correction(self, input_value) -> None:
         wrong_count = 0
         array_text = self.displayed_text.querySelectorAll('span')
 
@@ -110,14 +110,12 @@ class GameFunctions:
         else:
             self.wrong = False
 
-    def input_event(self, event):
-
-
+    def input_event(self, event) -> None:
         if self.first_time:
             self.cmn_func.timer_start()
             self.player_won = False
             self.first_time = False
-            self.move_bot()
+            self.move_bot(self.difficulty)
 
         value = event.target.value
         if len(value) > len(self.data.split(" ")[self.cursor_index]):
@@ -143,22 +141,32 @@ class GameFunctions:
             self.another_text_words(self.total_word_count)
 
 
-    def another_text_words(self, TOTAL_WORD_COUNT):
+    def another_text_words(self, TOTAL_WORD_COUNT) -> None:
         if self.cursor_index == TOTAL_WORD_COUNT:
             self.end_game(self.player)
 
+    def change_difficulty(self, event) -> None:
+        selected_value = event.target.id
+        if selected_value == "optionHard":
+            self.difficulty = 3
+        elif selected_value == "optionMedium":
+            self.difficulty = 2
+        else:
+            self.difficulty = 1
+        self.reset_game()
 
-    def reset_game(self):
+
+    def reset_game(self) -> None:
+        self.player_won = True
         self.mistakes = 0
         self.first_time = True
         self.cursor_index = 0
         self.written_text = ""
-        self.set_text()
+        self.set_text(difficulty=self.difficulty)
 
-    def end_game(self, car):
+    def end_game(self, car) -> None:
         print("Zabralo ti to:", self.cmn_func.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
         if car == self.player:
-            self.player_won = True
             print("YOU WON!!!")
         elif car == self.bot:
             print("YOU LOST!!!")
