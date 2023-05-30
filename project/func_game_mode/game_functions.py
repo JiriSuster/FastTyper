@@ -163,9 +163,9 @@ class GameFunctions:
         self.cursor_index = 0
         self.written_text = ""
         self.set_text(difficulty=self.difficulty)
+        self.data_for_chart = []
 
     def end_game(self, car) -> None:
-        print("Zabralo ti to:", self.cmn_func.timer_stop(), "sekund. Udělal jsi", self.mistakes, "chyb.")
         if car == self.player:
             print("YOU WON!!!")
         elif car == self.bot:
