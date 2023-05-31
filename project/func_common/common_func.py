@@ -1,11 +1,12 @@
 import json
-from js import document
+from js import document, localStorage
 import logging as log
 import random
 import time
 import js
 import plotly.graph_objects as go
-
+import json
+import datetime
 
 class Cmn:
 
@@ -73,6 +74,8 @@ class Cmn:
             for data in data_list:
                 x.append(data[0])
                 y.append(self._raw_wpm_counter(len(data[0]), data[1]))
+
+
         elif method == "wpm":
             for data in data_list:
                 x.append(data[0])
@@ -94,7 +97,13 @@ class Cmn:
         wpm = 0
         for item in y:
             wpm += int(item)
-        document.getElementById("wpm").innerHTML = round(wpm / len(y), 2)
+        wpm = round(wpm / len(y), 2)
+        document.getElementById("wpm").innerHTML = wpm
+        self.save_to_local_storage(wpm, method)
+        self.load_from_local_storage(method)
+
+
+
 
     def hide_overlay(self, PE_object):
         document.getElementById("overlay").style.visibility = "hidden"
@@ -102,3 +111,37 @@ class Cmn:
         text_input.disabled = False
         text_input.value = ""
         text_input.focus()
+
+    def save_to_local_storage(self ,wpm ,method):
+        current_date = datetime.datetime.now().isoformat()
+        data = {
+            "wpm": wpm,
+            "date": current_date,
+            "mode": "game_mode" if method == "raw_wpm" else "time_mode"
+        }
+        json_data = json.dumps(data)
+        localStorage.setItem(current_date, json_data)
+
+    def load_from_local_storage(self, method):
+        textt = "TOP 3: <br />"
+        data = []
+        method = "game_mode" if method == "raw_wpm" else "time_mode"
+
+        for i in localStorage.object_values():
+            if(method in i):
+                data.append(i)
+
+        data = [json.loads(item) for item in data]
+        sorted_data = sorted(data, key=lambda x: x['wpm'], reverse = True)
+
+
+
+        counter = 0
+        for i in sorted_data:
+            if(counter < 3):
+                date_string = i["date"]
+                date_time = datetime.datetime.fromisoformat(date_string)
+                formatted_date = date_time.strftime("%d.%m.%Y %H:%M")
+                textt += "  WPM:&nbsp;<b>" + str(i["wpm"]) +  "</b>&nbsp;&nbsp;&nbsp;"+ formatted_date + " \n <br />"
+                counter += 1
+        document.getElementById("history").innerHTML = textt

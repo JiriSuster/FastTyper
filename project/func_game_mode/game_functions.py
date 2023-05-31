@@ -23,6 +23,8 @@ class GameFunctions:
         self.player_won = False
         self.data_for_chart = list()
         self.difficulty = 1
+        self.text_input = document.getElementById("text_input")
+        self.lost = document.getElementById("lost")
 
 
     def move_player(self, car) -> None:
@@ -69,8 +71,10 @@ class GameFunctions:
     def check_shortcuts(self, event) -> None:
         if event.keyCode == 27:
             self.reset_game()
-            document.getElementById("text_input").value = ""
+            self.text_input.value = ""
             self.cmn_func.hide_overlay(True)
+            self.lost.style.visibility = "hidden"
+            self.text_input.disabled = False
 
     def text_correction(self, input_value) -> None:
         wrong_count = 0
@@ -153,10 +157,14 @@ class GameFunctions:
             self.difficulty = 2
         else:
             self.difficulty = 1
+        self.lost.style.visibility = "hidden"
+        self.text_input.disabled = False
+        self.text_input.focus()
         self.reset_game()
 
 
     def reset_game(self) -> None:
+        self.text_input.value = ""
         self.player_won = True
         self.mistakes = 0
         self.first_time = True
@@ -165,10 +173,12 @@ class GameFunctions:
         self.set_text(difficulty=self.difficulty)
         self.data_for_chart = []
 
+
     def end_game(self, car) -> None:
         if car == self.player:
-            print("YOU WON!!!")
+            self.player_won = True
+            self.cmn_func.show_chart(self.data_for_chart, "raw_wpm")
         elif car == self.bot:
-            print("YOU LOST!!!")
-        self.cmn_func.show_chart(self.data_for_chart, "raw_wpm")
+            self.lost.style.visibility = "visible"
+            self.text_input.disabled = True
         self.reset_game()

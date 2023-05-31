@@ -152,3 +152,4 @@ class TimeFunctions:
 
     def _game_end(self) -> None:
         self.cmn_func.show_chart(self.__final_data_for_chart, "wpm")
+        self.reset_game()

@@ -87,7 +87,7 @@ body {
     transform: translate(-50%, -50%);
     z-index: 9999;
     background-color: #1e1e1e;
-    height: 700px;
+    height: 745px;
 }
 
 .stats_header {
@@ -111,4 +111,8 @@ body {
 #chart{
     display: inline-block;
     width: 1000px;
+}
+
+#history{
+    float: right;
 }
