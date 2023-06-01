@@ -21,7 +21,7 @@ class Cmn:
             path_to_file = "func_common/words/wordsLVL2.json"
 
         elif level == 3:
-            path_to_file = "func_common/words/wordsLVL2.json"
+            path_to_file = "func_common/words/wordsLVL3.json"
 
         elif level == 4:
             path_to_file = "func_common/words/wordsLVL4.json"
