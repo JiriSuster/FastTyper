@@ -21,7 +21,27 @@ At the end of each round (unless you fail to beat the bot), you'll see detailed 
 
 ## Technology Stack  
 - **Core Logic**: Developed in Python, seamlessly integrated with the web using [PyScript](https://pyscript.net/).  
-- **Web Interface**: Built with simple yet effective HTML and CSS for an accessible and clean design.  
+- **Web Interface**: Built with simple yet effective HTML and CSS for an accessible and clean design.
+
+## Try it right now
+[FastTyper on my personal website](https://user.mendelu.cz/xsuster/project/game_mode.html)
+
+## Installation
+
+### Running Locally
+
+1. Clone this repository.
+2. If you have Python installed, you can run `main.py` directly.
+   - Run the following command in your terminal:
+     ```bash
+     python main.py
+     ```
+3. Alternatively, you can start a web server at the root of the project and visit [http://localhost:62159](http://localhost:62159) in your browser.
+
+### Deployment on web
+1. Just upload this repository to your web server.
+2. No additional configuration is required :)
+
 ## Authors
 
 - [David Krčmář](https://www.linkedin.com/in/david-krcmar-943182235/)
