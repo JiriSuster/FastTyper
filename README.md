@@ -1,5 +1,5 @@
 
-# Calmer
+# FastTyper
 Final project for course *Python Programming Language*, taught at [PEF MENDELU](https://pef.mendelu.cz/), graded 40/40 points
 ## Description
 This project is an alternative to [TypeRacer](https://play.typeracer.com/), designed to help users improve their typing speed and accuracy. The web app offers two engaging modes:  
