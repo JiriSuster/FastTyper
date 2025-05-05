@@ -59,7 +59,7 @@ class Cmn:
         def pad_unique(arr,
                        pad='\u200b'):
             # z githubu https://github.com/plotly/plotly.js/issues/1516
-            # nemuze byt 1 stejna polozka 2x na stejne ose, tak se pirda pokazde 0widthspace
+            # nemuze byt 1 stejna polozka 2x na stejne ose, tak se prida pokazde 0 widthspace
             mem = set()
             for idx, val in enumerate(arr):
                 while val in mem:
